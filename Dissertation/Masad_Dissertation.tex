@@ -1,0 +1,276 @@
+%%
+%% GMU LaTeX PhD Dissertation Format Template
+%%
+%% Developed by:
+%%      Daniel O. Awduche and Christopher A. St. Jean
+%%      Communications and Networking Lab
+%%      Dept. of Electrical and Computer Engineering
+%%
+%% Notes on usage can be found in the accompanying USAGE_NOTES.txt file.
+%%
+%%**********************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either
+%% expressed or implied; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall any contributor to this code be liable for any damages
+%% or losses, including, but not limited to, incidental, consequential, or
+%% any other damages, resulting from the use or misuse of any information
+%% contained here.
+%%**********************************************************************
+%%
+%% $Id: GMU_dissertation_template.tex,v 1.7 2007/05/02 02:20:38 Owner Exp $
+%%
+
+\documentclass[11 pt]{report}
+
+%%  The file ``gmudissertation.sty''  is the GMU latex style file and
+%%   should be placed in the same directory as your LaTeX files
+\usepackage{gmudissertation}
+
+%%
+%% other packages that need to be loaded
+%%
+\usepackage{graphicx}                    %   for imported graphics
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}                     %%
+\usepackage{amsfonts}                    %%  for AMS mathematics
+\usepackage{amssymb}                     %%
+\usepackage{amsthm}                      %%
+\usepackage[normalem]{ulem}              %   a nice standard underline package
+%\usepackage[noadjust,verbose,sort]{cite} %   arranges reference citations neatly
+\usepackage{setspace}                    %   for line spacing commands
+\usepackage{csquotes}			   % For block quotations
+%\usepackage[sort]{natbib}
+
+%
+% Bibliography setup
+%
+\usepackage[%style=chicago-authordate,
+			style=authoryear-comp,
+			natbib=true,
+			sortcites,
+			backend=bibtex,
+			doi=false,
+			url=false,
+			isbn=false,
+			]{biblatex}
+
+\addbibresource{Masad_Dissertation.bib}
+% Prune bibliography entries
+\AtEveryBibitem{
+	\clearlist{language}
+	\clearfield{month}
+	\clearfield{address}
+	\clearlist{location}
+}
+
+
+\usepackage{pdflscape} % Rotated PDF
+\usepackage{hyperref} % For URLs
+\usepackage{epigraph} % For an epigraph
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage[xindy,nonumberlist,nogroupskip,nopostdot]{glossaries}
+\makeglossaries
+
+%\AtEveryCitekey{\clearfield{month}}
+
+
+%% The file ``mydissertationabbrev.sty'' is an (optional) personalized file that
+%% may contain any and all LaTeX command (re)definitions that will be used
+%% throughout the document
+%\usepackage{mydissertationabbrev}
+
+\beforedoc
+
+\begin{document}
+
+%% In this section, all of the user-specific fields to be used in the
+%% title pages are set
+\title{Agents in Conflict\\
+            Comparative Agent-Based Modeling of International Crises and Conflicts}
+\onelinetitle{Agents in Conflict: Comparative Agent-Based Modeling of International Crises and Conflicts}
+\author{David P. Masad}
+\degree{Doctor of Philosophy}
+\doctype{Dissertation}
+\dept{Computational and Data Sciences}
+\discipline{Computational Social Science}
+
+
+\firstdeg{Bachelor of Science}
+\firstdegschool{The University of Chicago}
+\firstdegyear{2009}
+
+\degreeyear{2016}
+
+% Note: semester name should be written in its full-form. For example, Fall Semester, not just Fall.
+\degreesemester{Spring}
+
+\advisor{Dr. Robert Axtell}
+
+\firstmember{Dr. William G. Kennedy}
+
+\secondmember{Dr. Andrew Crooks}
+
+\thirdmember{Dr. Hilton Root}
+
+\depthead{Dr. Kevin M. Curtin}
+
+\assocdean{Dr. Donna M. Fox}
+
+% The current dean is Lloyd J. Griffiths
+\deanITE{Dr. Peggy Agouris}
+
+%%
+%% Introductory pages
+%%
+
+% Note: The signature sheet is set according to the requirements of the Volgenau School of
+% Information Technology and Engineering. If your college/school requirement is different,
+% please make appropriate changes in the "signaturepage" section of gmudissertation.sty file.
+\signaturepage
+
+\titlepage
+
+% copyright technically optional but should be included in to avoid potential pagination problems
+\copyrightpage
+
+%%
+%% Dedication page
+%%
+
+\dedicationpage
+
+\noindent To my family.
+
+%%
+%% Acknowledgements
+%%
+
+\acknowledgementspage
+
+\noindent This dissertation was made possible by the support, advice and guidance of my committee members, which began long before the dissertation itself. It also would not have been possible without the assistance and friendship of Karen Underwood, the most-central node in the CSS network. 
+
+
+%%
+%% Table of contents, list of tables, and lists of figures
+%%
+
+\tableofcontents
+
+\listoftables
+
+\listoffigures
+
+%
+% Glossary
+%
+
+\newglossaryentry{ABM}{name={ABM},description={Agent-based model}}
+\newglossaryentry{IIG}{name={IIG},description={International Interaction Game}}
+\newglossaryentry{EUM}{name={EUM},description={Expected Utility Model}}
+\newglossaryentry{BDM}{name={BDM},description={Bueno De Mesquita}}
+\newglossaryentry{PSTK}{name={PSTK},description={Power Structure Toolkit}}
+\newglossaryentry{COW}{name={COW},description={Correlates of War}}
+\newglossaryentry{ICEWS}{name={ICEWS},description={Integrated Crisis Early Warning System}}
+\newglossaryentry{ODD}{name={ODD},description={Overview, Design concepts and Details}}
+\newglossaryentry{PITF}{name={PITF},description={Political Instability Task Force}}
+\newglossaryentry{US/USA}{name={US/USA},description={United States of America}}
+\newglossaryentry{USSR}{name={USSR},description={Union of Soviet Socialist Republics (Soviet Union)}}
+\newglossaryentry{RL}{name={RL},description={Reinforcement Learning}}
+\newglossaryentry{CB}{name={CB},description={Case-Based}}
+\newglossaryentry{EWA}{name={EWA},description={Experience-Weighted Attraction}}
+\newglossaryentry{NMC}{name={NMC},description={National Material Capabilities}}
+\newglossaryentry{CINC}{name={CINC},description={Composite Index of National Capability}}
+\newglossaryentry{ERGM}{name={ERGM},description={Exponential Random Graph Model}}
+\newglossaryentry{MID}{name={MID},description={Militarized Interstate Dispute}}
+\newglossaryentry{NATO}{name={NATO},description={North Atlantic Treaty Organization}}
+\glsaddall % Add all entries to the glossary
+
+\printglossary[style=long,title=Abbreviations]
+
+%%
+%% Abstract
+%%
+\abstractpage
+
+Inter-state conflicts are a key area of study in international relations, and have been approached with a variety of techniques, from case studies of individual conflicts, to formal analysis of abstract models and statistical investigations of all such conflicts. In particular, there are a variety of theories as to how states make decisions in the face of conflicts -- such as when to threaten force, when to follow through, and when to capitulate to an opponent's demand. Some scholars have argued that states may be viewed as rational decisionmakers, while others emphasize the role of psychological biases affecting individual leaders. Decisionmaking is challenging to study in part because of its complexity: the decisionmakers may not just be individuals but organizations, following internal procedures and reflecting institutional memory. Furthermore, the decisions are often believed to be strategic, reflecting the decisionmakers' anticipation of multiple other actors' potential responses to each possible decision.
+
+In this dissertation, I demonstrate that agent-based models (ABMs) provide a powerful tool to address this complexity, and advance their use as a bridge between different methodologies. Agents in ABMs can be used to represent countries and endowed with a variety of internal decisionmaking models which can operationalize a variety of theories drawn from
+
+\abstractmultiplepage
+%% Be sure to leave a line of whitespace immediately before this line!!!!!
+%% (If this comment segment runs together with the preceeding text, you might
+%%  see the second page of the abstract numbered "0".)
+%%
+%% If the abstract is more than one page, then place this line PRECISELY
+%% at the page break; otherwise, comment it out.  (See note about this line
+%% in the usage notes.)
+%%
+\noindent case studies, psychological experiments or game-theoretic analysis. The specific decision model agents utilize may be changed without altering the sub-models governing how the agents interact with one another. This allows us to simulate the same overall interactions utilizing different decisionmaking theories and observe how the outcomes differ. Furthermore, if these interactions correspond to real-world events, we may directly see how much explanatory or predictive power the outputs of the model variants provide. If one variant's outputs correspond closer to the empirical data, it provides evidence supporting that variant's underlying theory.
+
+I implement two agent-based models, extending well-established prior models of international conflict: the International Interaction Game \citep{bdm_1992} and the Expected Utility Model \citep{bdm_2002}. For each, I start with their original agent decisionmaking models, and develop several variants grounded in relevant theories. I then instantiate the models with historic, empirically-derived data and run them forward to generate sets of simulated outcomes, which I compare to empirical data on the relevant time periods. I find that non-rational models of decisionmaking in the International Interaction Game provide similar explanatory power to the purely rational model, and yield rich satisficing behavior absent in the original model. I also find that the Expected Utility Model variant implementing a \citet{schelling_1966}-inspired model of coercion yields richer dynamics and greater explanatory power than the original model.
+
+In addition to providing evidence in support of particular theories and hypotheses, this work demonstrates the power of the comparative modeling methodology in studying international conflict. Future work will involve adding more statistical controls to the model output analysis, comparative analysis between the outputs of the two overall models, and extension of the decisionmaking models for each. The same methodology may also be expanded to other formal and computational models of international relations, and social science more broadly.
+
+
+%%
+%%  the main body of the dissertation
+%%
+
+\startofchapters
+
+%% include the chapters one by one (or paste the chapter text in directly if desired)
+
+\include{Introduction}
+
+\include{WarReason/War_Reason}
+
+\include{BDM_Reproduction/BDM_ABM}
+
+\include{ColdWar/ColdWar}
+
+\include{Conclusions}
+
+%% Note: appendix is now put before bibliography.
+%% include the following directives if there are any appendices
+%%\appendix
+%%\appendixeqnumbering
+%%\include{Appendix}
+
+%%
+%%  bibliography
+%%
+
+%% list all of the BibTeX files here for the WinEdt project (if applicable)
+%GATHER{bibfile.bib}
+
+%% any bibliography style can be used, but IEEEtran.bst is ideally suited to
+%% electrical engineering references
+
+%\bibliographystyle{IEEEtran}
+%\bibliography{IEEEfull,bibfile}
+
+%\bibliographystyle{biblatex-chicago}
+%\bibliographystyle{chicago}
+%\bibliography{Masad_Dissertation}
+
+\printbibliography
+
+%%
+%% curriculum vitae
+%%
+\cvpage
+
+David Paymar Masad attended the Tel Aviv University Science and Technology High School, and graduated from the University of Chicago in 2009 with a BA in economics and a minor in Near Eastern Studies. He worked as a research assistant at the Institute for Defense Analyses before enrolling in the Computational Social Science doctoral. program. Masad was the recipient of the 2012 GMU Presidential Scholarship, providing three years of tuition and assistantship funding.
+
+As a graduate research assistant, David worked with faculty on building models and analyzing data, covering topics from the Syrian conflict to DC-area mortgages. His own research focused on applying network analysis and agent-based modeling to international relations, with a focus on conflict and event data. In 2013, he attended the Santa Fe Institute's Complex Systems Summer School, researching the co-evolution of network attackers and defenders, and the networks emergent from Wikipedia edits. As a summer intern at Caerus Analytics and the MITRE Corporation, David led internal research efforts to develop agent-based models for policy support.
+
+In addition to the Presidential Scholarship, David received university funding to attend numerous conferences where he presented his research. He received NSF grants to attend the 2014 SBP Conference, and the 2014 Political Networks Conference, where his presentation of \emph{Dyadic Competition in the International Arms Trade Network} was awarded a Best Methodology Poster award. Over the course of his Ph.D. research, David received a 2015 summer research grant, and a 2016 dissertation completion grant.
+
+David is a candidate for a PhD in Computational Social Science, in the Computational and Data Sciences department of George Mason University.
+
+\end{document}

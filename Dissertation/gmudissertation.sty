@@ -1,0 +1,761 @@
+%%
+%% GMU LaTeX Dissertation Format Style File
+%%
+%% Developed by:
+%%      Daniel O. Awduche and Christopher A. St. Jean
+%%      Communications and Networking Lab
+%%      Dept. of Electrical and Computer Engineering
+%%      (with code adopted from the Stanford University PhD thesis
+%%      style and other sources)
+%%
+%% Modifications by:
+%%      Muhammad Abdulla
+%%      Department of Computer Science
+%%
+%% Notes on usage can be found in the accompanying USAGE_NOTES.txt file
+%%
+%% ** Needless to say, this file should not be changed by individual users
+%% unless (1) you're experimenting with different behavior and (2) you know
+%% what you're doing! **
+%%
+%%**********************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either
+%% expressed or implied; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall any contributor to this code be liable for any damages
+%% or losses, including, but not limited to, incidental, consequential, or
+%% any other damages, resulting from the use or misuse of any information
+%% contained here.
+%%**********************************************************************
+%%
+%% Revision history:
+%%
+%%      8/11/07: All page numbers are now at the bottom center (C. St. Jean)
+%%      1/14/08: Added disclaimer about signature lines. (Muhammad Abdulla)
+%%      1/14/08: Dedication and acknowledgments pages are set up to be
+%%               single spaced. (Muhammad Abdulla)
+%%      1/14/08: List of Tables and List of Figures are set to appear in
+%%               Table of Contents (Muhammad Abdulla)
+%%      1/14/08: Top margin of appendix is set to 1.25in from 2in (Muhammad Abdulla)
+%%      1/14/08: \ls macro is replaced with \doublespacing from setspace package
+%%               to keep text in figure captions and footnotes single spaced (Muhammad Abdulla)
+%%
+%% $Id: gmudissertation.sty,v 1.12 2008/01/14 03:56:45 Owner Exp $
+%%
+
+
+%
+%     ===========================
+% === definitions of new commands ===
+%     ===========================
+%
+
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+
+%
+% --- spacing, etc. ---
+%
+\newcommand{\nl}{\vskip 0.0pc}
+\newcommand{\noi}{\noindent}
+\newcommand{\emp}[1]{{\bf {#1}}}
+\newcommand{\capt}[1]{\caption{\small {\it {#1}}}}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{assum}{Assumption}[section]
+\newtheorem{Def}{Definition}[section]
+\newcommand{\ls}[1]
+   {\dimen0=\fontdimen6\the\font
+    \lineskip=#1\dimen0
+    \advance\lineskip.5\fontdimen5\the\font
+    \advance\lineskip-\dimen0
+    \lineskiplimit=.9\lineskip
+    \baselineskip=\lineskip
+    \advance\baselineskip\dimen0
+    \normallineskip\lineskip
+    \normallineskiplimit\lineskiplimit
+    \normalbaselineskip\baselineskip
+    \ignorespaces
+   }
+
+%%%%%
+%%%%%   SETUP MARGINS AND PENALTIES NEEDED FOR GMU DISSERTATION
+%%%%%
+
+
+% CAS parameters
+\def\siglinelength{2.5 in} % was 3.0 in
+\def\spacesiglinename{0.5 cm}
+\def\datelinelength{5.96 cm} % was 6.65 cm
+\def\siglinedepth{0.4pt}
+\def\intercommspace{0.20in}
+\def\commdatespace{0.45in}
+
+\def\tableSpace{\vskip 0.3in}
+\def\figSpace{\vskip 0.3in}
+
+\def\siglinewithspace{\rule{\siglinelength}{\siglinedepth} \hspace{\spacesiglinename}}
+
+\renewcommand{\baselinestretch}{1}
+\renewcommand{\contentsname}{\centering \large TABLE OF CONTENTS}
+\renewcommand{\listfigurename}{\centering \large LIST OF FIGURES}
+\renewcommand{\listtablename}{\centering \large LIST OF TABLES}
+\renewcommand{\abstractname}{\centering \large ABSTRACT}
+\renewcommand{\chaptername}{\hspace{2.225 in} \large CHAPTER}
+
+% We need 1" margins except on the binding edge, where it is 1 1/2"
+% Theses may be either single or double sided
+\if@twoside
+    \setlength\oddsidemargin   {36.1\p@}
+    \setlength\evensidemargin  {0\p@}
+    \setlength\marginparwidth {40\p@}
+\else
+    \setlength\oddsidemargin   {36.1\p@}
+    \setlength\evensidemargin  {36.1\p@}
+    \setlength\marginparwidth  {40\p@}
+\fi
+
+\marginparsep 10pt
+%\oddsidemargin 0.5in \evensidemargin 0in
+%\marginparwidth 40pt
+
+% CAS additions
+% \voffset -0.5in
+% \headheight 0in
+% \headsep 0.75in
+% \textheight 8.5in
+% \footskip 0in
+%%%
+
+% 11/06/03 additions
+\voffset -0.5in
+
+%%%%%%%
+
+% 11/07/03 additions
+\topmargin 0pt
+\headsep .5625in
+\textheight 8.6in
+\textwidth 6in
+\footskip 21pt
+
+
+% Disallow page breaks at hyphens (this will give some underfull vbox's,
+% so an alternative is to use \brokenpenalty=100 and manually search
+% for and fix such page breaks)
+\brokenpenalty=10000
+
+%%%%%
+%%%%%   SETUP COMMANDS PECULIAR TO THESES
+%%%%%
+
+% \author, \title are defined in report; here are the rest of the
+% front matter defining macros
+\def\onelinetitle#1{\gdef\@onelinetitle{#1}}
+\def\degree#1{\gdef\@degree{#1}}
+\def\doctype#1{\gdef\@doctype{#1}}
+\def\chapterOneTitle#1{\gdef\@chapterOneTitle{#1}}
+\def\dept#1{\gdef\@dept{#1}}
+\def\discipline#1{\gdef\@discipline{#1}} % Needed after the degree title in the title page (Muhammad Abdulla)
+\def\advis@r{Adviser} % default spelling
+\def\advisor#1{\gdef\@advisor{#1}}
+\def\firstmember#1{\gdef\@firstmember{#1}}
+\def\secondmember#1{\gdef\@secondmember{#1}}
+\def\thirdmember#1{\gdef\@thirdmember{#1}}
+\def\fourthmember#1{\gdef\@fourthmember{#1}}
+\def\depthead#1{\gdef\@depthead{#1}}
+\def\assocdean#1{\gdef\@assocdean{#1}}
+\def\deanITE#1{\gdef\@deanITE{#1}}
+\def\submitdate#1{\gdef\@submitdate{#1}}
+% \def\copyrightyear#1{\gdef\@copyrightyear{#1}} % \author, \title in report
+\def\firstdeg#1{\gdef\@firstdeg{#1}}
+\def\firstdegschool#1{\gdef\@firstdegschool{#1}}
+\def\firstdegyear#1{\gdef\@firstdegyear{#1}}
+\def\seconddeg#1{\gdef\@seconddeg{#1}}
+\def\seconddegschool#1{\gdef\@seconddegschool{#1}}
+\def\seconddegyear#1{\gdef\@seconddegyear{#1}}
+\def\degreesemester#1{\gdef\@degreesemester{#1}}
+\def\degreeyear#1{\gdef\@degreeyear{#1}}
+\def\abstract#1{\gdef\@abstract{#1}}
+% needed only for dual language departments
+%\def\language#1{\gdef\@language{#1}} \def\@language{babel}
+\def\@title{}\def\@author{}\def\@dept{Computer Science}\def\@discipline{Computer Science}
+\def\@advisor{}\def\@firstmember{*}\def\@secondmember{*}
+\def\@thirdmember{*}
+\def\@fourthmember{*}
+% \def\@submitdate{\ifcase\the\month\or
+%   January\or February\or March\or April\or May\or June\or
+%   July\or August\or September\or October\or November\or December\fi
+%   \space \number\the\year}
+% \ifnum\month>8
+%     \@tempcnta=\year \advance\@tempcnta by 1
+%     \edef\@copyrightyear{\number\the\@tempcnta}
+% \else
+%     \def\@copyrightyear{\number\the\year}
+% \fi
+\newif\ifcopyright \newif\iffigurespage \newif\iftablespage
+\newif\ifthesiscopyright
+\copyrighttrue \figurespagetrue \tablespagetrue
+\thesiscopyrighttrue
+
+\def\@standardsub{submitted to the department of \lowercase\expandafter{\@dept}\\
+                and the committee on graduate studies}
+\def\@standardend{}
+
+\def\committeethesis{\let\@whichsub=\@committeesub}
+\def\programthesis{\let\@whichsub=\@programsub}
+\def\educationthesis{\let\@whichsub=\@educationsub}
+\def\businessthesis{\let\@whichsub=\@businesssub}
+\def\lawthesis{\let\@whichsub=\@lawsub}
+\def\humanitiesthesis{\let\@whichsub=\@humanitiessub%
+\let\@whichend=\@humanitiesend}
+\def\specialthesis{\let\@whichsub=\@specialsub%
+\let\@whichend=\@specialend}
+\def\industrialthesis{\let\@whichsub=\@industrialsub%
+\let\@whichend=\@industrialend}
+\def\dualthesis{\let\@whichsub=\@dualsub%
+\let\@whichend=\@dualend}
+
+\let\@whichend=\@standardend
+\let\@whichsub=\@standardsub
+
+\def\beforedoc{
+    %
+    % --- spacing and page numbering
+    %
+
+    \markright{}
+    \pagestyle{myheadings}
+}
+
+
+\def\signaturepage{%
+        \pagenumbering{roman}
+        \pagestyle{plain}
+        \thispagestyle{empty}%
+        \null\vskip .5825in %\vskip .01in%
+        \begin{center}
+                \rm\uline{\uppercase\expandafter{\@title}}\\
+                \normalsize
+                \bigskip by \\
+                \bigskip \@author \\
+                %\bigskip
+                A \@doctype\ \\
+                Submitted to the\\
+                Graduate Faculty\\
+                of\\
+                George Mason University\\
+                In Partial fulfillment of\\
+                The Requirements for the Degree\\
+                of\\
+                \@degree\\
+                \@discipline\\[0.5 in]
+        \end{center}
+        Committee:\\[16 pt]
+        \siglinewithspace \@advisor, \@doctype\ Director \\[\intercommspace]
+        \siglinewithspace \@firstmember, Committee Member        \\[\intercommspace]
+        \siglinewithspace \@secondmember, Committee Member       \\[\intercommspace]
+        \siglinewithspace \@thirdmember, Committee Member        \\[\intercommspace]
+        \siglinewithspace \@depthead, Department Chair\\[\intercommspace] 
+        \siglinewithspace \@assocdean, Associate Dean, Office of Student Affairs \& Special Programs, College of Science\\[\intercommspace] 
+
+        % \phantom{\siglinewithspace\!\!} of \@dept \\ % commented out as requested by thesis office (Muhammad Abdulla)
+        \siglinewithspace \@deanITE, Dean, College of Science \\[\intercommspace]
+        %\siglinewithspace \@deanITE, Dean, The Volgenau School \\
+        %\phantom{\siglinewithspace\!\!} of Information Technology and Engineering \\[\intercommspace]
+%         \siglinewithspace \@programdirector, Associate Dean \\
+%          \phantom{\siglinewithspace} for Graduate Studies and Research \\[\commdatespace]
+        Date: \rule{\datelinelength}{\siglinedepth} \hspace{\spacesiglinename} \!\!\@degreesemester\
+%       Semester
+        \@degreeyear\\
+%         % optional fourth member
+%         \if*\@fourthmember
+%         \else
+%             \rule{\siglinelength}{\siglinedepth} \qquad \@fourthmember
+%             \\[\intercommspace]
+%         \fi
+        \phantom{Date: \rule{\datelinelength}{\siglinedepth} \hspace{\spacesiglinename} \!\!}George Mason University \\
+        \phantom{Date: \rule{\datelinelength}{\siglinedepth} \hspace{\spacesiglinename} \!\!}Fairfax, VA
+       \newpage
+}
+
+\def\titlepage{%
+        \thispagestyle{empty}%
+        \null\vskip .5825in %\vskip -0.1in%
+        \begin{center}
+                \rm\expandafter{\@onelinetitle}\\[10 pt]
+        \end{center}
+        A \lowercase\expandafter{\@doctype} submitted in partial fulfillment of the requirements for
+            the degree of \\ \@degree\ at George Mason University \\[10 pt]%[35 pt]
+        \begin{center}
+        By \\[35 pt]
+        \@author \\
+        %\if\@seconddeg % comment the following three lines out if you don't have a second degree
+         %    \@seconddeg\\
+         %    \@seconddegschool , \@seconddegyear
+        % \\
+%        \fi
+        \@firstdeg\\
+        \@firstdegschool , \@firstdegyear
+        \\[39 pt]
+        Director: \@advisor, Professor \\
+        Department of \@dept \\[35 pt]
+        \@degreesemester\
+        %Semester
+        \@degreeyear \\
+        George Mason University \\
+        Fairfax, VA
+        \end{center}
+
+        \vfill
+        \newpage
+}
+
+\def\copyrightpage{%
+        %\pagestyle{myheadings} % commented out to force page numbers to bottom center (8/11/07 change by C. St. Jean)
+        \null\vspace*{2.375 in}%{1.6875 in}%{2 in} %{2.125 in}
+        \pagenumbering{roman}
+        \setcounter{page}{2}
+        \begin{center}
+                %\large
+                Copyright\ \copyright\ \@degreeyear\ by \@author\\
+                All Rights Reserved
+        \end{center}
+        \vfill\newpage
+}
+
+\def\beforepreface{
+        \pagenumbering{roman}
+        \pagestyle{plain}
+        \signaturepage
+        \titlepage
+        %\ifcopyright\ifthesiscopyright\thesiscopyrightpage\else\tradcopyrightpage\fi\fi
+}
+
+\def\dedicationpage{%
+        \lineskiplimit=1pc
+        %\baselineskip=1pc
+        %\lineskip=1pc
+        % replacing the two lines above with the following line so that the lineskip
+        % for dedictaion page is  single spaced. (Muhammad Abdulla)
+        \ls{1}
+
+        \renewcommand{\thepage}{\roman{page}}
+        \setcounter{page}{3}
+
+       % \chapter*{Dedication\@mkboth {DEDICATION}{DEDICATION}}
+       % \addcontentsline{toc}{chapter}{#1}
+
+       % \vspace*{0.63in}
+       \vspace*{.30 in}%{0.175 in}
+
+        \begin{center}
+        {\Large \bf Dedication}
+        \end{center}
+        \vskip 2.93 pc
+}
+
+\def\acknowledgementspage{%
+        % The settings for lineskips are carried over from the dedication page.
+        % But we cannot depend on it. So adding these lines to be sure that the
+        % text in acknowledgements is single spaced. (Muhammad Abdulla)
+        \ls{1}
+
+        \pagebreak
+        \vspace*{0.30 in}%{0.175 in}%\vspace*{0.63in}
+        \begin{center}
+        {\Large \bf Acknowledgments}
+        \end{center}
+        \vskip 2.73 pc
+}
+
+\def\startofchapters{%
+    \renewcommand{\thepage}{\arabic{page}}
+    \setcounter{chapter}{0}
+    %\ls{2}
+    % replacing this with the \doublespacing command from setspace package, as
+    % the \ls macro above makes text in figure captions and footnotes double
+    % spaced, which is undesirable. setspace package avoid this. (Muhammad Abdulla)
+    \doublespacing
+    \setcounter{page}{0}
+}
+
+
+%
+% --- chapters ---
+%
+
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+        \refstepcounter{chapter}%
+        \typeout{\@chapapp\space\thechapter.}%
+        \addcontentsline{toc}{chapter}{\protect
+        %    \numberline{\thechapter} \bf #1}  %% USE FOR BOLD TOC!!!!!!
+            \numberline{\thechapter} #1}
+      \else
+            \addcontentsline{toc}{chapter}{#1}
+      \fi
+   \chaptermark{#1}
+%  \addtocontents{lof} {\protect\addvspace{10\p@}}
+%  \addtocontents{lot} {\protect\addvspace{10\p@}}
+   \if@twocolumn
+           \@topnewpage[\@makechapterhead{#2}]%
+     \else \@makechapterhead{#2}%
+           \@afterheading
+     \fi}
+
+\def\@schapter#1{
+        \refstepcounter{chapter}
+        \typeout{\@chapapp\space\thechapter.}
+        \addcontentsline{toc}{chapter}{\protect
+        \numberline{}\hspace*{-0.25in}#1}
+   \chaptermark{#1}
+%  \addtocontents{lof}{\protect\addvspace{0pt}}
+%  \addtocontents{lot}{\protect\addvspace{0pt}}
+   \if@twocolumn \@topnewpage[\@makeschapterhead{#1}]
+        \else \@makeschapterhead{#1}
+              \@afterheading\fi}
+
+
+\def\l@chapter{\vskip 0.0em plus 1pt
+        %\bf
+        \@dottedtocline{0}{0.0em}{1.35em}
+}
+
+\def\@makechapterhead#1{
+  { \parindent 0pt \raggedright
+    \vspace*{0.27 in}%{0.75in}
+%%%    \centerline{\Large \bf \@chapapp{} \thechapter
+    \begin{center}
+     {\Large \bf Chapter \thechapter
+    \Large \bf
+%%%   \space : #1} \par
+    : #1} \par
+\end{center}
+    \nobreak
+    \vskip 22 pt %40pt
+  }
+
+}
+
+\def\@makeschapterhead#1{
+  { \parindent 0pt \raggedright
+    \vspace*{0.6 in}%{0.75in}
+    \centerline{\Large \bf #1} \par
+    \nobreak
+    \vskip 40pt
+  }
+}
+
+%
+% --- appendix chapters ---
+%
+
+\def\appchapter[#1]#2{
+\ifnum \c@secnumdepth >\m@ne
+        \refstepcounter{chapter}%
+        \typeout{\@chapapp\space\thechapter.}%
+        \addcontentsline{toc}{chapter}{\protect
+        %\numberline{\thechapter} \bf  #1} %% USE FOR BOLD TOC!!!
+        \numberline{\thechapter} #1}
+\else
+      \addcontentsline{toc}{chapter}{#1}
+\fi
+   \chaptermark{#1}
+%  \addtocontents{lof} {\protect\addvspace{10\p@}}
+%  \addtocontents{lot} {\protect\addvspace{10\p@}}
+   \if@twocolumn
+           \@topnewpage[\@makeappchapterhead{#2}]%
+     \else \@makeappchapterhead{#2}%
+           \@afterheading
+     \fi}
+
+\def\@makeappchapterhead#1{
+  { \parindent 0pt \raggedright
+    %\vspace*{0.27 in}%{0.75in}
+    \vspace*{-0.48 in} % changing top margin of appendix from 2" to 1.25" (Muhammad Abdulla)
+%%%    \centerline{\Large \bf \@chapapp{} \thechapter
+    \begin{center}
+     {\Large \bf Appendix \thechapter
+    \Large \bf
+%%%   \space : #1} \par
+    : #1} \par
+\end{center}
+    \nobreak
+    \vskip 22 pt %40pt
+  }
+
+}
+
+\def\@makeappschapterhead#1{
+  { \parindent 0pt \raggedright
+    \vspace*{0.6 in}%{0.75in}
+    \centerline{\Large \bf #1} \par
+    \nobreak
+    \vskip 40pt
+  }
+}
+
+%
+% --- secondary chapters
+%
+
+\def\chapt{\clearpage      % Starts new page.
+   %\thispagestyle{plain}     % Page style of chapter page is 'plain'
+   \global\@topnum\z@        % Prevents figures from going at top of page.
+   \@afterindentfalse        % Suppresses indent in first paragraph.  Change
+   \secdef\@chapt\@schapt   % to \@afterindenttrue to have indent.
+}
+
+\def\@chapt[#1]#2{\ifnum \c@secnumdepth >\m@ne
+        \refstepcounter{chapter}
+        \typeout{\@chapapp\space\thechapter.}
+        \addcontentsline{toc}{chapter}{\protect
+        \numberline{}\hspace*{-0.25in}#1}\else
+      \addcontentsline{toc}{chapter}{\hspace*{-0.25in}#1}\fi
+   \chaptermark{#1}
+%  \addtocontents{lof}{\protect\addvspace{0pt}} % Adds between-chapter space
+%  \addtocontents{lot}{\protect\addvspace{0pt}} % to lists of figs & tables.
+   \if@twocolumn                                 % Tests for two-column mode.
+           \@topnewpage[\@makechapthead{#2}]
+     \else \@makechapthead{#2}
+           \@afterheading                  % Routine called after chapter and
+     \fi}                                  % section heading.
+
+\def\chaptnontoc{\clearpage      % Starts new page.
+   %\thispagestyle{plain}     % Page style of chapter page is 'plain'
+   \global\@topnum\z@        % Prevents figures from going at top of page.
+   \@afterindentfalse        % Suppresses indent in first paragraph.  Change
+   \secdef\@chaptnontoc\@schapt   % to \@afterindenttrue to have indent.
+}
+
+\def\@chaptnontoc[#1]#2{\ifnum \c@secnumdepth >\m@ne
+        \refstepcounter{chapter}
+        \typeout{\@chapapp\space\thechapter.}
+        %\addcontentsline{toc}{chapter}{\protect \numberline{}\hspace*{-0.25in}#1}
+        \else
+        %\addcontentsline{toc}{chapter}{\hspace*{-0.25in}#1}
+        \fi
+   \chaptermark{#1}
+%  \addtocontents{lof}{\protect\addvspace{0pt}} % Adds between-chapter space
+%  \addtocontents{lot}{\protect\addvspace{0pt}} % to lists of figs & tables.
+   \if@twocolumn                                 % Tests for two-column mode.
+           \@topnewpage[\@makechapthead{#2}]
+     \else \@makechapthead{#2}
+           \@afterheading                  % Routine called after chapter and
+     \fi                                   % section heading.
+}
+
+
+
+
+\def\@schapt#1{\if@twocolumn \@topnewpage[\@makeschapthead{#1}]
+        \else \@makeschapthead{#1}
+              \@afterheading\fi}
+
+\def\@makechapthead#1{
+  { \parindent 0pt \raggedright
+    \vspace*{0.625in}%{0.75in}
+    \centerline{\Large \bf #1} \par
+    \nobreak
+    \vskip 50pt
+  } }
+
+\def\@makeschapthead#1{
+  { \parindent 0pt \raggedright
+    \vspace*{0.625in}%{0.75in}
+    \centerline{\Large \bf #1} \par
+    \nobreak
+    \vskip 50pt
+  }
+}
+
+%
+% --- table of contents ---
+%
+
+\def\tableofcontents{
+    \baselineskip=0.25pc
+    \lineskip=0.25pc
+    \lineskiplimit=0.25pc
+    \@restonecolfalse
+    \if@twocolumn
+        \@restonecoltrue\onecolumn
+    \fi
+    \chapt*{Table of Contents\@mkboth{TABLE OF CONTENTS}{TABLE OF CONTENTS}}
+    \vskip -0.83 pc
+    \hfill Page \par
+    \lineskip=0.7pc     %%% USE FOR WIDER SPACING TOC
+    \@starttoc{toc}
+    \if@restonecol
+        \twocolumn
+    \fi
+    \lineskip=0.25pc   %%% USE FOR WIDER SPACING TOC
+}
+
+
+% --List of Tables
+% captiontable - a tabular environment nested within a table environment with
+%                a label, an optional List of Tables entry and a caption
+
+\def\captiontable#1{
+ \@ifnextchar [{\@captiontable{#1}}{\@dblarg{\@captiontable{#1}}}}
+
+\def\@captiontable#1[#2]#3{
+ \def\@captionlabel{#1}
+ \def\@captionlistentry{#2}
+ \def\@captionheading{#3}
+ \begin{table}
+ \centering }
+
+\def\endcaptiontable{
+% \spacing{1}
+ \caption [\@captionlistentry]{\@captionheading}
+ \label {\@captionlabel}
+ \vspace*{7.6in}
+ \end{table}}
+
+
+\def\listoftables{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+  %\fi\chaptnontoc{List of Tables\@mkboth
+  % make "List of Tables" appear in Table of Contents (Muhammad Abdulla)
+  \fi\chapt{List of Tables\@mkboth
+   {LIST OF TABLES}{LIST OF TABLES}}
+   \vskip -0.83 pc
+   Table \hfill Page \par
+   \lineskip=0.7pc  %%% USE FOR WIDER SPACING LOT
+   \@starttoc{lot}
+   \if @restonecol
+   \twocolumn
+   \fi
+   \lineskip=0.25pc  %%% USE FOR WIDER SPACING LOT
+}
+
+%
+% --- list of figures ---
+%
+
+\def\listoffigures{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+  \fi
+  %\chaptnontoc{List of Figures\@mkboth
+  % make "List of Tables" appear in Table of Contents (Muhammad Abdulla)
+  \chapt{List of Figures\@mkboth
+   {LIST OF FIGURES}{LIST OF FIGURES}}
+   \vskip -0.83 pc
+   \vspace*{-0.05in}
+   Figure \hfill Page \par
+   \lineskip=0.7pc  %%% USE FOR WIDER SPACING LOF
+   \@starttoc{lof}\if@restonecol
+   \twocolumn\fi
+   \lineskip=0.25pc  %%% USE FOR WIDER SPACING LOF
+}
+
+%
+% --- abstract
+%
+
+\def\abstractpage{
+    \pagebreak
+    \baselineskip=0.25pc
+    \lineskip=0.25pc
+    \lineskiplimit=0.25pc
+
+    \thispagestyle{empty}
+
+    \chapt{Abstract}
+
+    \baselineskip=1pc
+    \lineskip=1pc
+    \lineskiplimit=1pc
+
+    \vskip 0.25cm
+    \noi
+    \ls{1}
+    \rm\uppercase\expandafter{\@onelinetitle}
+    \nl
+
+     \baselineskip=1pc
+     \lineskip=1pc
+     \lineskiplimit=1pc
+
+    \noi
+    \@author, PhD
+    \nl
+
+    \noi
+    George Mason University, \@degreeyear
+    \nl
+
+    \noi
+    \@doctype\ Director: \@advisor
+    \nl
+
+    \vskip 46pt
+}
+
+\def\abstractmultiplepage{
+    \pagebreak \thispagestyle{empty}
+}
+
+\def\appendixeqnumbering {
+    \renewcommand{\theequation}{\thechapter.\arabic{equation}}
+}
+
+%
+% --- bibliography
+%
+
+\def\thebibliography#1{
+\ls{1}
+\chapter*{Bibliography\@mkboth
+  {BIBLIOGRAPHY}{BIBLIOGRAPHY}}
+  \markright{}
+  %\thispagestyle{myheadings} % commented out to force page numbers to bottom center (8/11/07 change by C. St. Jean)
+  %\thispagestyle{empty}
+  \pagebreak
+  \vskip 50pt
+  \vspace*{0.61 in}%{0.75in}
+  \centerline{\Large \bf Bibliography}\par \nobreak
+  %\vskip 40pt
+  \vskip 55pt
+  \list
+  {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \usecounter{enumi}}
+    \def\newblock{\hskip .11em plus .33em minus .07em}
+    \sloppy\clubpenalty4000\widowpenalty4000
+    \sfcode`\.=1000\relax}
+
+%
+% --- curriculum vitae
+%
+
+\def\cvpage{%
+        \pagebreak
+        \vspace*{.26 in}
+        \begin{center}
+        {\Large \bf Curriculum Vitae}
+        \end{center}
+        \vskip 43 pt
+        \ls{1}
+        \noindent
+}
+
+% we can send console reminder messages to the user here
+% Added by Muhammad Abdulla
+\AtEndDocument{
+\typeout{}%
+\typeout{======================== Attention ===============================}%
+\typeout{}%
+\typeout{The signature lines are different for each College/School of}%
+\typeout{George Mason University.}%
+\typeout{}%
+\typeout{The current signature page is set according to the requirements} %
+\typeout{of the Volgenau School of Information Technology and Engineering.}%
+\typeout{Students of other colleges/schools may need to manipulate the}%
+\typeout{"signaturepage" section of the gmudissertation.sty file in order}%
+\typeout{for the signature page to be formatted correctly.}%
+\typeout{}%
+\typeout{==================================================================}%
+\typeout{}%
+}
