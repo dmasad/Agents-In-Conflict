@@ -113,7 +113,7 @@ For every actor, we must assign position, salience, and capability values. Like 
 
 \subsubsection{Risk Propensity Update ($\mathbf{R_0}$)} \label{risk_update}
 
-Conceptually, actors wish to balance between their preferred issue outcome and their desire to be a part of a winning coalition. At one extreme, an actor may adhere to its own position regardless of the positions of the rest of the actors, and no matter how much power is arrayed against it. At the other extreme, an actor may completely abandon its preferred position and seek to position itself as close to the current consensus or winning position as possible. In practice, most actors are likely to fall somewhere between these two poles.
+Conceptually, actors wish to balance between their preferred issue outcome and their desire to be a part of a winning coalition. At one extreme, an actor may adhere to its own position regardless of the positions of the rest of the actors, and no matter how much power is arrayed against it. At the other extreme, an actor may completely abandon its preferred position and seek to position itself as close as possible to the current consensus or winning position. In practice, most actors are likely to fall somewhere between these two poles.
 
 In order to estimate each actor's risk propensity, the model compares the actor's current security to the security of all other actors in the model. More formally:
 
@@ -202,7 +202,7 @@ This EU value comes into play in several ways: first, at each step, agents issue
 
 \subsubsection{Responding to Offers ($\mathbf{M_0, A_0}$)} \label{challenges}
 
-Once all the actors have sent their offers, they decide on at most one offer to accept. The offer selection mechanism is perhaps the least specified of all the model components in any of the prior literature. However, \citet{scholz_2011} argue that agents choose offers based on two criteria: the expected utility associated with each offer, and the distance it requires the target actor to move. This is the approach I describe here.
+Once all the actors have sent their offers, they decide on at most one offer to accept. The offer selection mechanism is perhaps the least specified of all the model components in any of the prior literature. I utilize the description provided by \citet{scholz_2011}, who argue that agents choose offers based on two criteria: the expected utility associated with each offer, and the distance it requires the target actor to move.
 
 In this approach, agents initially evaluate the distance between their current position, and the position associated with the offer. Agents will choose offers where this distance is the smallest, preferring to accept offers requiring them to change position the least.
 
@@ -313,7 +313,7 @@ In order to understand how the model behaves, it is valuable to take a close loo
 
 \begin{table}
 \centering
-\caption{Example Model -- Agent data}
+\caption{Example Model -- Agent Data}
 \label{table:eg_agent_data}
 \begin{tabular}{lccc|c}
     \hline
@@ -385,7 +385,7 @@ Next, the agents estimate their expected utility of threatening all other agents
 
 Table \ref{eg_offers} shows which offer each agent accepts, and what category each one falls into. Immediately, we notice that five agents all choose to enter into conflict with Belgium. Note that Belgium's position is exactly in the middle of the issue space, and it has lower salience than Greece, the other agent holding the same position, making it an appealing target. For a conflict to occur, Belgium must choose one of them -- and indeed chooses the Netherlands, which leads to a conflict. Meanwhile, Denmark chooses to compromise with Greece and update its position towards it, while Greece chooses to compromise with the UK. However, recall that agents renege on offers if another agent has accepted their own offer in a more preferable way. In this case, since Denmark has chosen to compromise with Greece, Greece in turn backs out from its decision to compromise with the UK, and will not update its position at all.
 
-The conflict between Belgium and the Netherlands happens before Denmark updates its position. Each agent contributes capability to one side or the other, as governed by Equation \ref{eq:votes}; these contributions are shown in Table \ref{table:contribution}. Note that even the two actual actors entering into the conflict do not allocate their full capabilities: they are scaled once by their salience, and again by the distance between their positions. Putting the total values into Equation \ref{eq:p_win} yields a probability of victory of 0.63 for Belgium, and thus 0.37 for the Netherlands. The model uses these probabilities to randomly select the winner; if Belgium wins, the Netherlands updates its position to 0.5, and if the Netherlands wins Belgium updates its own position to 0. At this point, Denmark will update its own position to compromise with Greece. Then, the next round begins.
+The conflict between Belgium and the Netherlands happens before Denmark updates its position. Each agent contributes capability to one side or the other, as governed by Equation \ref{eq:votes}; these contributions are shown in Table \ref{table:contributions}. Note that even the two actual actors entering into the conflict do not allocate their full capabilities: they are scaled once by their salience, and again by the distance between their positions. Putting the total values into Equation \ref{eq:p_win} yields a probability of victory of 0.63 for Belgium, and thus 0.37 for the Netherlands. The model uses these probabilities to randomly select the winner; if Belgium wins, the Netherlands updates its position to 0.5, and if the Netherlands wins Belgium updates its own position to 0. At this point, Denmark will update its own position to compromise with Greece. Then, the next round begins.
 
 \begin{table}[h!]
 \centering
@@ -430,7 +430,7 @@ In this section, I will discuss several of the model assumptions in greater dept
 
 While the expected utility calculation (Equation \ref{eq:EU}) is important enough to give the model its name, I note that this calculation is largely heuristic in nature. The probability of winning or losing $P$ (as computed in Equation \ref{eq:p_win}) is based on the best possible approximation. The inclusion of the salience term as a probability, however, is much more obviously a heuristic. The source of a potential threat uses salience as the probability of the target yielding to that threat. However, salience does not play a similar role in the threat response side of the model; in fact, it is possible for an agent to have low salience and high probability of winning a conflict, and hence high EU, due to support from other agents. Simply put: agents are modeled as making an estimation that is plausible on its face, but that nevertheless does not reflect the reality of the model itself. 
 
-$Q$ and $T$ are more clearly broad heuristics: they are not as specifically tied to the behavior of a particular agent, but are approximate, coarse-grained estimates of the behavior of the world overall. While \citet{bdm_2002} suggests that agents update their belief about the world in response to the outcome of each round, no such learning rule is provided. $Q$ and $T$ provide candidates for such updating: for example, the agents could use the fraction of agents that moved last round as $Q$, or update their belief in a Bayesian fashion based on a prior probability distribution for $Q$. Alternatively, we may note that any given model potentially represents one issue among many which the actors are addressing at once or in rapid sequence.
+$Q$ and $T$ are more clearly broad heuristics: they are not as specifically tied to the behavior of a particular agent, but are approximate, coarse-grained estimates of the behavior of the world overall. While \citet{bdm_2002} suggests that agents update their belief about the world in response to the outcome of each round, no such learning rule is provided. $Q$ and $T$ provide candidates for such updating: for example, the agents could use the fraction of agents that moved last round as $Q$, or update their belief in a Bayesian fashion based on a prior probability distribution for $Q$. Alternatively, we may note that any given model potentially represents one issue among many which the actors are addressing at once or in rapid sequence, and suggest that $Q$ and $T$ represent heuristics developed across all issues.
 
 \subsection{Conflict and Coercion} \label{conflict_coercion}
 
@@ -746,7 +746,7 @@ These are relatively simple statistical models; in particular, we have no reason
 \begin{table}
 
 \begin{center}
-    \caption{ICEWS Conflict Events -- Linear regressions}
+    \caption{ICEWS Conflict Events -- Linear Regressions}
     \label{table:icews_linear}
 \begin{tabular}{lcccccc}
     \hline
@@ -771,7 +771,7 @@ These are relatively simple statistical models; in particular, we have no reason
 
 \begin{table}
 \begin{center}
-    \caption{ICEWS Conflict Events -- Logistic regressions}
+    \caption{ICEWS Conflict Events -- Logistic Regressions}
     \label{table:icews_logit}
 \begin{tabular}{lcccccc}
     \hline
